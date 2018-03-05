@@ -77,6 +77,13 @@ def reserve_book():
 	if rec[3] == 1:
 		return "book already reserved"
 
+	c2 = conn.execute("select * from reserves where STUDENTID = %s and RETURNED is null" % (str(s_id)))
+	stu = c2.fetchall()
+	# print(stu, len(stu))
+
+	if len(stu) >= 3:
+		return "maximum books already reserved for student"
+
 	# TODO: sql injection. meh.
 	q1 = "insert into reserves (BOOKID, STUDENTID, BORROWED, DUE) VALUES ( '%s', '%s', date('now'), date('now', '+7 day') )" % (b_id, s_id)
 	q2 = "update books set RESERVED = 1 where ID = %s;" % (b_id)
