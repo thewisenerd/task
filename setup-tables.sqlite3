@@ -1,0 +1,22 @@
+create table books (
+  ID  INTEGER PRIMARY KEY,
+  NAME  TEXT NOT NULL,
+  AUTHOR  TEXT NOT NULL,
+  RESERVED  INTEGER NOT NULL
+);
+
+insert into books (NAME, AUTHOR, RESERVED) values ( 'To Kill a MockingBird', 'Harper Lee', 0);
+insert into books (NAME, AUTHOR, RESERVED) values ( 'Pride and Prejudice', 'Jane Austen', 0);
+insert into books (NAME, AUTHOR, RESERVED) values ( 'The Diary of Anne Frank', 'Anne Frank', 0);
+insert into books (NAME, AUTHOR, RESERVED) values ( '1984', 'George Orwell', 0);
+insert into books (NAME, AUTHOR, RESERVED) values ( 'Harry Porter and the Sorcerers Stone', 'JK Rowling', 0);
+insert into books (NAME, AUTHOR, RESERVED) values ( 'The Lord of the Rings', 'J.R.R. Tolkein', 0);
+
+create table reserves (
+  ID  INTEGER PRIMARY KEY,
+  BOOKID  INTEGER NOT NULL,
+  STUDENTID  INTEGER NOT NULL,
+  BORROWED   TEXT NOT NULL,
+  DUE        TEXT NOT NULL,
+  RETURNED   TEXT
+);
