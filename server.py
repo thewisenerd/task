@@ -59,6 +59,37 @@ def search_title():
 
 	return s
 
+@app.route("/search/student")
+def search_student():
+	q = request.args.get('q')
+	s = ""
+
+	if q == None:
+		return "missing search parameter q"
+
+	# TODO: SQL injection
+	cursor = conn.execute(" select * from reserves inner join books on reserves.BOOKID = books.ID where reserves.STUDENTID = %s and RETURNED is null; " % str(q))
+	req = cursor.fetchall()
+
+	if len(req) == 0:
+		return "no books issued"
+
+	s += "<table>";
+	s += "<tr>";
+	s += "<td>%s</td>" % ("ID") 
+	s += "<td>%s</td>" % ("TITLE") 
+	s += "<td>%s</td>" % ("AUTHOR") 
+	s += "<td>%s</td>" % ("BORROWED") 
+	s += "<td>%s</td>" % ("DUE") 
+	s += "</tr>"
+
+	for row in req:
+		s += "<tr> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> </tr>" % (row[1], row[7], row[8], row[3], row[4])
+
+	return s
+
+
+
 @app.route("/reserve/book")
 def reserve_book():
 	s_id = request.args.get('sid');
